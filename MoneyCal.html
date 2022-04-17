@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Money Calculator</title>
+    <style>
+      table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      td,
+      th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+      }
+      tr:nth-child(even) {
+        background-color: #dddddd;
+      }
+      .title {
+        font-family: arial, sans-serif;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 20px;
+        margin-top: 20px;
+        text-align: center;
+        color: rgb(254, 74, 182);
+      }
+      button {
+        border: 0px;
+        background-color: inherit;
+      }
+      button:hover {
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="title">Money Calculator</div>
+    <table>
+      <tr>
+        <td><strong>EFTPOS</strong></td>
+        <td>
+          <input
+            type="number"
+            id="eftpos"
+            onkeypress="preventNonNumericalInput(event)"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td style="border: 0ch; background-color: white"></td>
+      </tr>
+      <tr>
+        <th>Notes</th>
+        <th>How many?</th>
+        <th
+          style="border-bottom: 0ch; border-top: 0ch; background-color: white"
+        ></th>
+        <th>Coins</th>
+        <th>How many?</th>
+      </tr>
+      <tr>
+        <td>$100</td>
+        <td>
+          <input
+            type="number"
+            id="hundreds"
+            onkeypress="preventNonNumericalInput(event)"
+          />
+        </td>
+        <td
+          style="border-bottom: 0ch; border-top: 0ch; background-color: white"
+        ></td>
+        <td>$2</td>
+        <td>
+          <input
+            type="number"
+            id="twos"
+            onkeypress="preventNonNumericalInput(event)"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>$50</td>
+        <td>
+          <input
+            type="number"
+            id="fifties"
+            onkeypress="preventNonNumericalInput(event)"
+          />
+        </td>
+        <td
+          style="border-bottom: 0ch; border-top: 0ch; background-color: white"
+        ></td>
+        <td>$1</td>
+        <td>
+          <input
+            type="number"
+            id="ones"
+            onkeypress="preventNonNumericalInput(event)"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>$20</td>
+        <td>
+          <input
+            type="number"
+            id="twenties"
+            onkeypress="preventNonNumericalInput(event)"
+          />
+        </td>
+        <td
+          style="border-bottom: 0ch; border-top: 0ch; background-color: white"
+        ></td>
+        <td>50c</td>
+        <td>
+          <input
+            type="number"
+            id="fiftyCents"
+            onkeypress="preventNonNumericalInput(event)"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>$10</td>
+        <td>
+          <input
+            type="number"
+            id="tens"
+            onkeypress="preventNonNumericalInput(event)"
+          />
+        </td>
+        <td
+          style="border-bottom: 0ch; border-top: 0ch; background-color: white"
+        ></td>
+        <td>20c</td>
+        <td>
+          <input
+            type="number"
+            id="twentyCents"
+            onkeypress="preventNonNumericalInput(event)"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td>$5</td>
+        <td>
+          <input
+            type="number"
+            id="fives"
+            onkeypress="preventNonNumericalInput(event)"
+          />
+        </td>
+        <td
+          style="border-bottom: 0ch; border-top: 0ch; background-color: white"
+        ></td>
+        <td>10c</td>
+        <td>
+          <input
+            type="number"
+            id="tenCents"
+            onkeypress="preventNonNumericalInput(event)"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td style="border: 0ch; background-color: white"></td>
+        <td style="border: 0ch; background-color: white"></td>
+        <td style="border: 0ch; background-color: white"></td>
+        <td>5c</td>
+        <td>
+          <input
+            type="number"
+            id="fiveCents"
+            onkeypress="preventNonNumericalInput(event)"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td style="border: 0ch; background-color: white"></td>
+      </tr>
+      <tr>
+        <td style="border: 0ch; background-color: rgb(249, 211, 234)">
+          <button onclick="solve()"><strong>Calculate</strong></button>
+        </td>
+      </tr>
+      <tr>
+        <td style="border: 0ch; background-color: white"></td>
+      </tr>
+      <tr>
+        <td style="border: 0ch; background-color: white">
+          <strong>Total</strong>
+        </td>
+        <td style="border: 0ch; background-color: white" id="totalText">
+          $0.00
+        </td>
+      </tr>
+    </table>
+    <script>
+      // Evaluate the numbers
+      function solve() {
+        document.getElementById("totalText").innerHTML = "$";
+        let hundredsTotal = document.getElementById("hundreds").value * 100;
+        let fiftiesTotal = document.getElementById("fifties").value * 50;
+        let twentiesTotal = document.getElementById("twenties").value * 20;
+        let tensTotal = document.getElementById("tens").value * 10;
+        let fivesTotal = document.getElementById("fives").value * 5;
+        let twosTotal = document.getElementById("twos").value * 2;
+        let onesTotal = document.getElementById("ones").value * 1;
+        let fiftyCentsTotal = document.getElementById("fiftyCents").value * 0.5;
+        let twentyCentsTotal =
+          document.getElementById("twentyCents").value * 0.2;
+        let tenCentsTotal = document.getElementById("tenCents").value * 0.1;
+        let fiveCentsTotal = document.getElementById("fiveCents").value * 0.05;
+        let eftposTotal = document.getElementById("eftpos").value * 1;
+        let finalTotal =
+          hundredsTotal +
+          fiftiesTotal +
+          twentiesTotal +
+          tensTotal +
+          fivesTotal +
+          twosTotal +
+          onesTotal +
+          fiftyCentsTotal +
+          twentyCentsTotal +
+          tenCentsTotal +
+          fiveCentsTotal +
+          eftposTotal;
+        document.getElementById("totalText").innerHTML =
+          "$" + finalTotal.toFixed(2);
+      }
+
+      // Prevent letters in input
+      function preventNonNumericalInput(e) {
+        e = e || window.event;
+        var charCode = typeof e.which == "undefined" ? e.keyCode : e.which;
+        var charStr = String.fromCharCode(charCode);
+        if (!charStr.match(/^[0-9]+$/)) e.preventDefault();
+      }
+    </script>
+  </body>
+</html>
