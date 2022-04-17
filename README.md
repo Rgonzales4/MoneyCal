@@ -1,2 +1,2 @@
 # MoneyCal
-A simple web app to find the sum of money (notes and coins)
+A simple web app to find the sum of AU money (notes and coins)
