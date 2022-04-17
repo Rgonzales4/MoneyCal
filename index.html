@@ -45,7 +45,11 @@
       <tr>
         <td><strong>EFTPOS</strong></td>
         <td>
-          <input type="number" id="eftpos" />
+          <input
+            type="number"
+            id="eftpos"
+            onkeypress="preventNonNumericalInput(event)"
+          />
         </td>
       </tr>
       <tr>
