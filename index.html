@@ -47,6 +47,12 @@
         <td>
           <input type="number" id="eftpos" />
         </td>
+        <td style="border: 0ch; background-color: white"></td>
+        <td style="border: 0ch; background-color: white"></td>
+        <td><strong>Petty</strong></td>
+        <td>
+          <input type="number" id="petty" />
+        </td>
       </tr>
       <tr>
         <td style="border: 0ch; background-color: white"></td>
@@ -223,6 +229,35 @@
         </td>
       </tr>
     </table>
+
+    <div class="title">Breakdown</div>
+    <table class="totalsTable">
+      <tr>
+        <td>
+          <strong>EFTPOS</strong>
+        </td>
+        <td id="eftposValue">$0.00</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Cash Profit</strong><br />
+          <span style="font-size: x-small">(Excluding $500 in Till)</span>
+        </td>
+        <td id="cashProfit">$0.00</td>
+      </tr>
+      <tr>
+        <td>
+          <strong>Petty</strong>
+        </td>
+        <td id="pettyValue">$0.00</td>
+      </tr>
+      <tr style="background-color: white">
+        <td style="float: right; border: 0ch">
+          <strong>Total</strong>
+        </td>
+        <td style="border: 0ch" id="breakdownTotal">$0.00</td>
+      </tr>
+    </table>
     <script>
       // Evaluate the numbers
       function solve() {
@@ -240,6 +275,7 @@
         let tenCentsTotal = document.getElementById("tenCents").value * 0.1;
         let fiveCentsTotal = document.getElementById("fiveCents").value * 0.05;
         let eftposTotal = document.getElementById("eftpos").value * 1;
+        let pettyTotal = document.getElementById("petty").value * 1;
         let finalTotal =
           hundredsTotal +
           fiftiesTotal +
@@ -252,9 +288,20 @@
           twentyCentsTotal +
           tenCentsTotal +
           fiveCentsTotal +
-          eftposTotal;
+          eftposTotal +
+          pettyTotal;
+        // -$500 because there's always $500 in the Till
+        let cashTotal = finalTotal - eftposTotal - pettyTotal - 500;
         document.getElementById("totalText").innerHTML =
           "$" + finalTotal.toFixed(2);
+        document.getElementById("eftposValue").innerHTML =
+          "$" + eftposTotal.toFixed(2);
+        document.getElementById("pettyValue").innerHTML =
+          "$" + pettyTotal.toFixed(2);
+        document.getElementById("cashProfit").innerHTML =
+          "$" + cashTotal.toFixed(2);
+        document.getElementById("breakdownTotal").innerHTML =
+          "$" + (eftposTotal + pettyTotal + cashTotal).toFixed(2);
       }
 
       // Prevent letters in input
@@ -265,6 +312,7 @@
         if (!charStr.match(/^[0-9]+$/)) e.preventDefault();
       }
 
+      // Individual total for each Note and Coin values
       function individualTotal(from, to, number) {
         document.getElementById(to).innerHTML =
           "$" + (document.getElementById(from).value * number).toFixed(2);
