@@ -250,7 +250,7 @@
       <tr>
         <td>
           <strong>Cash Profit</strong><br />
-          <span style="font-size: x-small">(Excluding $500 in Till)</span>
+          <span style="font-size: x-small">(Excluding $600 in Till)</span>
         </td>
         <td id="cashProfit">$0.00</td>
       </tr>
@@ -298,8 +298,8 @@
           fiveCentsTotal +
           eftposTotal +
           pettyTotal;
-        // -$500 because there's always $500 in the Till
-        let cashTotal = finalTotal - eftposTotal - pettyTotal - 500;
+        // -$600 because there's always $600 in the Till
+        let cashTotal = finalTotal - eftposTotal - pettyTotal - 600;
         document.getElementById("totalText").innerHTML =
           "$" + finalTotal.toFixed(2);
         document.getElementById("eftposValue").innerHTML =
