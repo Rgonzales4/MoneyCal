@@ -45,14 +45,11 @@ function solve() {
     pettyTotal;
   // Subtract the float that always stays in the till (500 or 600)
   let cashTotal = finalTotal - eftposTotal - pettyTotal - floatTotal;
-  document.getElementById("totalText").innerHTML =
-    "$" + finalTotal.toFixed(2);
+  document.getElementById("totalText").innerHTML = "$" + finalTotal.toFixed(2);
   document.getElementById("eftposValue").innerHTML =
     "$" + eftposTotal.toFixed(2);
-  document.getElementById("pettyValue").innerHTML =
-    "$" + pettyTotal.toFixed(2);
-  document.getElementById("cashProfit").innerHTML =
-    "$" + cashTotal.toFixed(2);
+  document.getElementById("pettyValue").innerHTML = "$" + pettyTotal.toFixed(2);
+  document.getElementById("cashProfit").innerHTML = "$" + cashTotal.toFixed(2);
   document.getElementById("breakdownTotal").innerHTML =
     "$" + (eftposTotal + pettyTotal + cashTotal).toFixed(2);
 }

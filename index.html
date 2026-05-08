@@ -1,247 +1,225 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Till Counter</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="wrap">
-      <header>
-        <h1>TILL COUNTER</h1>
-        <span>Count dat cash</span>
-      </header>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Till Counter</title>
+        <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <link rel="stylesheet" href="styles.css" />
+    </head>
+    <body>
+        <div class="wrap">
+            <header>
+                <h1>TILL COUNTER</h1>
+                <span>Count dat cash</span>
+            </header>
 
-      <!-- TILL TOTALS -->
-      <div class="card">
-        <div class="card-title"><span class="num">1</span> Till Totals</div>
-        <div class="grid-2">
-          <div>
-            <label>EFTPOS</label>
-            <div class="input-prefix">
-              <span>$</span>
-              <input type="number" id="eftpos" placeholder="0.00" step="0.01" />
+            <!-- TILL TOTALS -->
+            <div class="card">
+                <div class="card-title"><span class="num">1</span> Till Totals</div>
+                <div class="grid-2">
+                    <div>
+                        <label>EFTPOS</label>
+                        <div class="input-prefix">
+                            <span>$</span>
+                            <input type="number" id="eftpos" placeholder="0.00" step="0.01" />
+                        </div>
+                    </div>
+                    <div>
+                        <label>Petty</label>
+                        <div class="input-prefix">
+                            <span>$</span>
+                            <input type="number" id="petty" placeholder="0.00" step="0.01" />
+                        </div>
+                    </div>
+                </div>
+                <div class="float-row">
+                    <label>Float in Till</label>
+                    <div class="mode-tabs" id="float-tabs">
+                        <button type="button" class="mode-tab" id="float-tab-500" onclick="setFloat(500)">$500</button>
+                        <button type="button" class="mode-tab active" id="float-tab-600" onclick="setFloat(600)">$600</button>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div>
-            <label>Petty</label>
-            <div class="input-prefix">
-              <span>$</span>
-              <input type="number" id="petty" placeholder="0.00" step="0.01" />
+
+            <!-- NOTES & COINS -->
+            <div class="card">
+                <div class="card-title"><span class="num">2</span> Cash Count</div>
+                <p class="card-hint">Count <strong>every note and coin</strong> in the till — the float is deducted automatically when you calculate.</p>
+                <div class="grid-2">
+                    <!-- NOTES -->
+                    <div>
+                        <div class="money-section-label">Notes</div>
+                        <div class="money-list">
+                            <div class="money-row">
+                                <div class="denom">$100</div>
+                                <input
+                                    type="number"
+                                    id="hundreds"
+                                    placeholder="0"
+                                    onkeyup="individualTotal('hundreds', 'indHundreds', 100)"
+                                    onkeypress="preventNonNumericalInput(event)"
+                                />
+                                <div class="ind-total" id="indHundreds">$0.00</div>
+                            </div>
+                            <div class="money-row">
+                                <div class="denom">$50</div>
+                                <input
+                                    type="number"
+                                    id="fifties"
+                                    placeholder="0"
+                                    onkeyup="individualTotal('fifties', 'indFifties', 50)"
+                                    onkeypress="preventNonNumericalInput(event)"
+                                />
+                                <div class="ind-total" id="indFifties">$0.00</div>
+                            </div>
+                            <div class="money-row">
+                                <div class="denom">$20</div>
+                                <input
+                                    type="number"
+                                    id="twenties"
+                                    placeholder="0"
+                                    onkeyup="individualTotal('twenties', 'indTwenties', 20)"
+                                    onkeypress="preventNonNumericalInput(event)"
+                                />
+                                <div class="ind-total" id="indTwenties">$0.00</div>
+                            </div>
+                            <div class="money-row">
+                                <div class="denom">$10</div>
+                                <input
+                                    type="number"
+                                    id="tens"
+                                    placeholder="0"
+                                    onkeyup="individualTotal('tens', 'indTens', 10)"
+                                    onkeypress="preventNonNumericalInput(event)"
+                                />
+                                <div class="ind-total" id="indTens">$0.00</div>
+                            </div>
+                            <div class="money-row">
+                                <div class="denom">$5</div>
+                                <input
+                                    type="number"
+                                    id="fives"
+                                    placeholder="0"
+                                    onkeyup="individualTotal('fives', 'indFives', 5)"
+                                    onkeypress="preventNonNumericalInput(event)"
+                                />
+                                <div class="ind-total" id="indFives">$0.00</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- COINS -->
+                    <div>
+                        <div class="money-section-label">Coins</div>
+                        <div class="money-list">
+                            <div class="money-row">
+                                <div class="denom">$2</div>
+                                <input
+                                    type="number"
+                                    id="twos"
+                                    placeholder="0"
+                                    onkeyup="individualTotal('twos', 'indTwos', 2)"
+                                    onkeypress="preventNonNumericalInput(event)"
+                                />
+                                <div class="ind-total" id="indTwos">$0.00</div>
+                            </div>
+                            <div class="money-row">
+                                <div class="denom">$1</div>
+                                <input
+                                    type="number"
+                                    id="ones"
+                                    placeholder="0"
+                                    onkeyup="individualTotal('ones', 'indOnes', 1)"
+                                    onkeypress="preventNonNumericalInput(event)"
+                                />
+                                <div class="ind-total" id="indOnes">$0.00</div>
+                            </div>
+                            <div class="money-row">
+                                <div class="denom">50c</div>
+                                <input
+                                    type="number"
+                                    id="fiftyCents"
+                                    placeholder="0"
+                                    onkeyup="individualTotal('fiftyCents', 'indFiftyCents', 0.5)"
+                                    onkeypress="preventNonNumericalInput(event)"
+                                />
+                                <div class="ind-total" id="indFiftyCents">$0.00</div>
+                            </div>
+                            <div class="money-row">
+                                <div class="denom">20c</div>
+                                <input
+                                    type="number"
+                                    id="twentyCents"
+                                    placeholder="0"
+                                    onkeyup="individualTotal('twentyCents', 'indTwentyCents', 0.2)"
+                                    onkeypress="preventNonNumericalInput(event)"
+                                />
+                                <div class="ind-total" id="indTwentyCents">$0.00</div>
+                            </div>
+                            <div class="money-row">
+                                <div class="denom">10c</div>
+                                <input
+                                    type="number"
+                                    id="tenCents"
+                                    placeholder="0"
+                                    onkeyup="individualTotal('tenCents', 'indTenCents', 0.1)"
+                                    onkeypress="preventNonNumericalInput(event)"
+                                />
+                                <div class="ind-total" id="indTenCents">$0.00</div>
+                            </div>
+                            <div class="money-row">
+                                <div class="denom">5c</div>
+                                <input
+                                    type="number"
+                                    id="fiveCents"
+                                    placeholder="0"
+                                    onkeyup="individualTotal('fiveCents', 'indFiveCents', 0.05)"
+                                    onkeypress="preventNonNumericalInput(event)"
+                                />
+                                <div class="ind-total" id="indFiveCents">$0.00</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-calc" onclick="solve()">CALCULATE</button>
+
+                <div class="total-banner">
+                    <div class="label">Total</div>
+                    <div class="value" id="totalText">$0.00</div>
+                </div>
             </div>
-          </div>
-        </div>
-        <div class="float-row">
-          <label>Float in Till</label>
-          <div class="mode-tabs" id="float-tabs">
-            <button
-              type="button"
-              class="mode-tab"
-              id="float-tab-500"
-              onclick="setFloat(500)"
-            >
-              $500
-            </button>
-            <button
-              type="button"
-              class="mode-tab active"
-              id="float-tab-600"
-              onclick="setFloat(600)"
-            >
-              $600
-            </button>
-          </div>
-        </div>
-      </div>
 
-      <!-- NOTES & COINS -->
-      <div class="card">
-        <div class="card-title"><span class="num">2</span> Cash Count</div>
-        <p class="card-hint">
-          Count <strong>every note and coin</strong> in the till — the float is
-          deducted automatically when you calculate.
-        </p>
-        <div class="grid-2">
-          <!-- NOTES -->
-          <div>
-            <div class="money-section-label">Notes</div>
-            <div class="money-list">
-              <div class="money-row">
-                <div class="denom">$100</div>
-                <input
-                  type="number"
-                  id="hundreds"
-                  placeholder="0"
-                  onkeyup="individualTotal('hundreds','indHundreds', 100)"
-                  onkeypress="preventNonNumericalInput(event)"
-                />
-                <div class="ind-total" id="indHundreds">$0.00</div>
-              </div>
-              <div class="money-row">
-                <div class="denom">$50</div>
-                <input
-                  type="number"
-                  id="fifties"
-                  placeholder="0"
-                  onkeyup="individualTotal('fifties','indFifties', 50)"
-                  onkeypress="preventNonNumericalInput(event)"
-                />
-                <div class="ind-total" id="indFifties">$0.00</div>
-              </div>
-              <div class="money-row">
-                <div class="denom">$20</div>
-                <input
-                  type="number"
-                  id="twenties"
-                  placeholder="0"
-                  onkeyup="individualTotal('twenties','indTwenties', 20)"
-                  onkeypress="preventNonNumericalInput(event)"
-                />
-                <div class="ind-total" id="indTwenties">$0.00</div>
-              </div>
-              <div class="money-row">
-                <div class="denom">$10</div>
-                <input
-                  type="number"
-                  id="tens"
-                  placeholder="0"
-                  onkeyup="individualTotal('tens','indTens', 10)"
-                  onkeypress="preventNonNumericalInput(event)"
-                />
-                <div class="ind-total" id="indTens">$0.00</div>
-              </div>
-              <div class="money-row">
-                <div class="denom">$5</div>
-                <input
-                  type="number"
-                  id="fives"
-                  placeholder="0"
-                  onkeyup="individualTotal('fives','indFives', 5)"
-                  onkeypress="preventNonNumericalInput(event)"
-                />
-                <div class="ind-total" id="indFives">$0.00</div>
-              </div>
+            <!-- BREAKDOWN -->
+            <div class="card">
+                <div class="card-title"><span class="num">3</span> Breakdown</div>
+                <div class="breakdown-list">
+                    <div class="breakdown-row">
+                        <div class="label">EFTPOS</div>
+                        <div class="value" id="eftposValue">$0.00</div>
+                    </div>
+                    <div class="breakdown-row">
+                        <div class="label">
+                            Cash Profit
+                            <span class="sub" id="cashProfitSub">(Excluding $600 float in Till)</span>
+                        </div>
+                        <div class="value" id="cashProfit">$0.00</div>
+                    </div>
+                    <div class="breakdown-row">
+                        <div class="label">Petty</div>
+                        <div class="value" id="pettyValue">$0.00</div>
+                    </div>
+                    <hr class="divider" />
+                    <div class="breakdown-row total-row">
+                        <div class="label">Profit Total</div>
+                        <div class="value" id="breakdownTotal">$0.00</div>
+                    </div>
+                </div>
             </div>
-          </div>
-
-          <!-- COINS -->
-          <div>
-            <div class="money-section-label">Coins</div>
-            <div class="money-list">
-              <div class="money-row">
-                <div class="denom">$2</div>
-                <input
-                  type="number"
-                  id="twos"
-                  placeholder="0"
-                  onkeyup="individualTotal('twos','indTwos', 2)"
-                  onkeypress="preventNonNumericalInput(event)"
-                />
-                <div class="ind-total" id="indTwos">$0.00</div>
-              </div>
-              <div class="money-row">
-                <div class="denom">$1</div>
-                <input
-                  type="number"
-                  id="ones"
-                  placeholder="0"
-                  onkeyup="individualTotal('ones','indOnes', 1)"
-                  onkeypress="preventNonNumericalInput(event)"
-                />
-                <div class="ind-total" id="indOnes">$0.00</div>
-              </div>
-              <div class="money-row">
-                <div class="denom">50c</div>
-                <input
-                  type="number"
-                  id="fiftyCents"
-                  placeholder="0"
-                  onkeyup="individualTotal('fiftyCents','indFiftyCents', 0.5)"
-                  onkeypress="preventNonNumericalInput(event)"
-                />
-                <div class="ind-total" id="indFiftyCents">$0.00</div>
-              </div>
-              <div class="money-row">
-                <div class="denom">20c</div>
-                <input
-                  type="number"
-                  id="twentyCents"
-                  placeholder="0"
-                  onkeyup="individualTotal('twentyCents','indTwentyCents', 0.2)"
-                  onkeypress="preventNonNumericalInput(event)"
-                />
-                <div class="ind-total" id="indTwentyCents">$0.00</div>
-              </div>
-              <div class="money-row">
-                <div class="denom">10c</div>
-                <input
-                  type="number"
-                  id="tenCents"
-                  placeholder="0"
-                  onkeyup="individualTotal('tenCents','indTenCents', 0.1)"
-                  onkeypress="preventNonNumericalInput(event)"
-                />
-                <div class="ind-total" id="indTenCents">$0.00</div>
-              </div>
-              <div class="money-row">
-                <div class="denom">5c</div>
-                <input
-                  type="number"
-                  id="fiveCents"
-                  placeholder="0"
-                  onkeyup="individualTotal('fiveCents','indFiveCents', 0.05)"
-                  onkeypress="preventNonNumericalInput(event)"
-                />
-                <div class="ind-total" id="indFiveCents">$0.00</div>
-              </div>
-            </div>
-          </div>
         </div>
 
-        <button class="btn-calc" onclick="solve()">CALCULATE</button>
-
-        <div class="total-banner">
-          <div class="label">Total</div>
-          <div class="value" id="totalText">$0.00</div>
-        </div>
-      </div>
-
-      <!-- BREAKDOWN -->
-      <div class="card">
-        <div class="card-title"><span class="num">3</span> Breakdown</div>
-        <div class="breakdown-list">
-          <div class="breakdown-row">
-            <div class="label">EFTPOS</div>
-            <div class="value" id="eftposValue">$0.00</div>
-          </div>
-          <div class="breakdown-row">
-            <div class="label">
-              Cash Profit
-              <span class="sub" id="cashProfitSub"
-                >(Excluding $600 float in Till)</span
-              >
-            </div>
-            <div class="value" id="cashProfit">$0.00</div>
-          </div>
-          <div class="breakdown-row">
-            <div class="label">Petty</div>
-            <div class="value" id="pettyValue">$0.00</div>
-          </div>
-          <hr class="divider" />
-          <div class="breakdown-row total-row">
-            <div class="label">Profit Total</div>
-            <div class="value" id="breakdownTotal">$0.00</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script src="script.js"></script>
-  </body>
+        <script src="script.js"></script>
+    </body>
 </html>
