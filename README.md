@@ -1,5 +1,5 @@
 # MoneyCal
-
+up
 A simple web app for tallying an Australian till at end-of-day. Enter the EFTPOS and Petty totals, count the notes and coins on hand, and MoneyCal works out the grand total plus a profit breakdown.
 
 **Live:** https://rgonzales4.github.io/MoneyCal/
