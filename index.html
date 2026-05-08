@@ -329,6 +329,39 @@
         margin: 20px 0;
       }
 
+      /* Float selector */
+      .float-row {
+        margin-top: 16px;
+      }
+
+      .mode-tabs {
+        display: flex;
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        overflow: hidden;
+        background: var(--surface2);
+        max-width: 240px;
+      }
+
+      .mode-tab {
+        flex: 1;
+        background: none;
+        border: none;
+        padding: 9px 14px;
+        font-family: "DM Sans", sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--muted);
+        cursor: pointer;
+        transition: all 0.15s;
+        text-align: center;
+      }
+
+      .mode-tab.active {
+        background: var(--accent);
+        color: #fff0f3;
+      }
+
       @media (max-width: 480px) {
         body {
           padding: 20px 12px 60px;
@@ -374,6 +407,27 @@
               <span>$</span>
               <input type="number" id="petty" placeholder="0.00" step="0.01" />
             </div>
+          </div>
+        </div>
+        <div class="float-row">
+          <label>Float in Till</label>
+          <div class="mode-tabs" id="float-tabs">
+            <button
+              type="button"
+              class="mode-tab"
+              id="float-tab-500"
+              onclick="setFloat(500)"
+            >
+              $500
+            </button>
+            <button
+              type="button"
+              class="mode-tab active"
+              id="float-tab-600"
+              onclick="setFloat(600)"
+            >
+              $600
+            </button>
           </div>
         </div>
       </div>
@@ -537,7 +591,9 @@
           <div class="breakdown-row">
             <div class="label">
               Cash Profit
-              <span class="sub">(Excluding $600 in Till)</span>
+              <span class="sub" id="cashProfitSub"
+                >(Excluding $600 float in Till)</span
+              >
             </div>
             <div class="value" id="cashProfit">$0.00</div>
           </div>
@@ -555,6 +611,22 @@
     </div>
 
     <script>
+      let floatTotal = 600;
+
+      function setFloat(value) {
+        floatTotal = value;
+        
+        document
+          .getElementById("float-tab-500")
+          .classList.toggle("active", value === 500);
+        document
+          .getElementById("float-tab-600")
+          .classList.toggle("active", value === 600);
+
+        document.getElementById("cashProfitSub").innerHTML =
+          "(Excluding $" + value + " float in Till)";
+      }
+
       // Evaluate the numbers
       function solve() {
         let hundredsTotal = document.getElementById("hundreds").value * 100;
@@ -585,8 +657,8 @@
           fiveCentsTotal +
           eftposTotal +
           pettyTotal;
-        // -$600 because there's always $600 in the Till
-        let cashTotal = finalTotal - eftposTotal - pettyTotal - 600;
+        // Subtract the float that always stays in the till (500 or 600)
+        let cashTotal = finalTotal - eftposTotal - pettyTotal - floatTotal;
         document.getElementById("totalText").innerHTML =
           "$" + finalTotal.toFixed(2);
         document.getElementById("eftposValue").innerHTML =
